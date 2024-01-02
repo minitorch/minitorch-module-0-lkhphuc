@@ -157,12 +157,8 @@ def zipWith(
          applying fn(x, y) on each pair of elements.
 
     """
-    def apply_fn(ls1: list[float], ls2: list[float]) -> Iterable:
-        assert len(ls1) == len(ls2)
-        out = [ ]
-        for i in range(len(ls1)):
-            out.append(fn(ls1[i], ls2[i]))
-        return out
+    def apply_fn(ls1: Iterable[float], ls2: Iterable[float]) -> Iterable[float]:
+        return [fn(i, j) for i, j in zip(ls1, ls2)]
     return apply_fn
 
 
