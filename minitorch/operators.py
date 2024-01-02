@@ -47,8 +47,7 @@ def max(x: float, y: float) -> float:
 
 def is_close(x: float, y: float) -> float:
     "$f(x) = |x - y| < 1e-2$"
-    delta = abs(x - y)
-    return True if delta < 1e-2 else False
+    return abs(x - y) < 1e-2
 
 
 def sigmoid(x: float) -> float:
@@ -103,7 +102,7 @@ def inv(x: float) -> float:
 
 def inv_back(x: float, d: float) -> float:
     r"If $f(x) = 1/x$ compute $d \times f'(x)$"
-    return -x**2
+    return -(x**2)
 
 
 def relu_back(x: float, d: float) -> float:
@@ -112,6 +111,7 @@ def relu_back(x: float, d: float) -> float:
         return d * 1.0
     else:
         return 0
+
 
 # ## Task 0.3
 
@@ -131,8 +131,10 @@ def map(fn: Callable[[float], float]) -> Callable[[Iterable[float]], Iterable[fl
         A function that takes a list, applies `fn` to each element, and returns a
          new list
     """
+
     def apply_fn(inputs: Iterable[float]) -> Iterable[float]:
         return [fn(x) for x in inputs]
+
     return apply_fn
 
 
@@ -157,8 +159,10 @@ def zipWith(
          applying fn(x, y) on each pair of elements.
 
     """
+
     def apply_fn(ls1: Iterable[float], ls2: Iterable[float]) -> Iterable[float]:
         return [fn(i, j) for i, j in zip(ls1, ls2)]
+
     return apply_fn
 
 
@@ -182,12 +186,15 @@ def reduce(
          $x_1 \ldots x_n$ and computes the reduction :math:`fn(x_3, fn(x_2,
          fn(x_1, x_0)))`
     """
+
     def apply_fn(ls: Iterable[float]) -> float:
         x = start
-        for i in range(len(ls)):
-            x = fn(ls[i], x)
+        for item in ls:
+            x = fn(item, x)
         return x
+
     return apply_fn
+
 
 def sum(ls: Iterable[float]) -> float:
     "Sum up a list using `reduce` and `add`."

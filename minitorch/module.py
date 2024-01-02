@@ -53,7 +53,8 @@ class Module:
         """
         params = [(k, v) for k, v in self._parameters.items()]
         for k, m in self._modules.items():
-            params += [(f"{k}.{name}", param) for name, param in m.named_parameters()]
+            params += [(f"{k}.{name}", param)
+                       for name, param in m.named_parameters()]
         return params
 
     def parameters(self) -> Sequence[Parameter]:
@@ -62,7 +63,6 @@ class Module:
         for m in self.modules():
             params += m.parameters()
         return params
-
 
     def add_parameter(self, k: str, v: Any) -> Parameter:
         """
@@ -99,6 +99,7 @@ class Module:
         return self.forward(*args, **kwargs)
 
     def __repr__(self) -> str:
+
         def _addindent(s_: str, numSpaces: int) -> str:
             s2 = s_.split("\n")
             if len(s2) == 1:

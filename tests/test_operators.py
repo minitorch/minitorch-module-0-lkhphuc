@@ -1,4 +1,3 @@
-from math import isclose
 from typing import Callable, List, Tuple
 
 import pytest
@@ -32,7 +31,7 @@ from .strategies import assert_close, small_floats
 # ## Task 0.1 Basic hypothesis tests.
 
 
-@pytest.mark.task0_1
+@pytest.mark.task0_1()
 @given(small_floats, small_floats)
 def test_same_as_python(x: float, y: float) -> None:
     "Check that the main operators all return the same value of the python version"
@@ -44,7 +43,7 @@ def test_same_as_python(x: float, y: float) -> None:
         assert_close(inv(x), 1.0 / x)
 
 
-@pytest.mark.task0_1
+@pytest.mark.task0_1()
 @given(small_floats)
 def test_relu(a: float) -> None:
     if a > 0:
@@ -53,7 +52,7 @@ def test_relu(a: float) -> None:
         assert relu(a) == 0.0
 
 
-@pytest.mark.task0_1
+@pytest.mark.task0_1()
 @given(small_floats, small_floats)
 def test_relu_back(a: float, b: float) -> None:
     if a > 0:
@@ -62,13 +61,13 @@ def test_relu_back(a: float, b: float) -> None:
         assert relu_back(a, b) == 0.0
 
 
-@pytest.mark.task0_1
+@pytest.mark.task0_1()
 @given(small_floats)
 def test_id(a: float) -> None:
     assert id(a) == a
 
 
-@pytest.mark.task0_1
+@pytest.mark.task0_1()
 @given(small_floats)
 def test_lt(a: float) -> None:
     "Check that a - 1.0 is always less than a"
@@ -76,7 +75,7 @@ def test_lt(a: float) -> None:
     assert lt(a, a - 1.0) == 0.0
 
 
-@pytest.mark.task0_1
+@pytest.mark.task0_1()
 @given(small_floats)
 def test_max(a: float) -> None:
     assert max(a - 1.0, a) == a
@@ -85,7 +84,7 @@ def test_max(a: float) -> None:
     assert max(a, a + 1.0) == a + 1.0
 
 
-@pytest.mark.task0_1
+@pytest.mark.task0_1()
 @given(small_floats)
 def test_eq(a: float) -> None:
     assert eq(a, a) == 1.0
@@ -100,7 +99,7 @@ def test_eq(a: float) -> None:
 # mathematical rules.
 
 
-@pytest.mark.task0_2
+@pytest.mark.task0_2()
 @given(small_floats)
 def test_sigmoid(a: float) -> None:
     """Check properties of the sigmoid function, specifically
@@ -113,10 +112,10 @@ def test_sigmoid(a: float) -> None:
     assert_close(sigmoid(a) + sigmoid(-a), 1.0)
     assert sigmoid(0.) == 0.5
     if a < 10:
-        assert sigmoid(a-0.1) < sigmoid(a) < sigmoid(a+0.1)
+        assert sigmoid(a - 0.1) < sigmoid(a) < sigmoid(a + 0.1)
 
 
-@pytest.mark.task0_2
+@pytest.mark.task0_2()
 @given(small_floats, small_floats, small_floats)
 def test_transitive(a: float, b: float, c: float) -> None:
     "Test the transitive property of less-than (a < b and b < c implies a < c)"
@@ -128,9 +127,9 @@ def test_transitive(a: float, b: float, c: float) -> None:
             assert b < c
 
 
-@pytest.mark.task0_2
+@pytest.mark.task0_2()
 @given(small_floats, small_floats)
-def test_symmetric(a: float, b:float) -> None:
+def test_symmetric(a: float, b: float) -> None:
     """
     Write a test that ensures that :func:`minitorch.operators.mul` is symmetric, i.e.
     gives the same value regardless of the order of its input.
@@ -138,17 +137,17 @@ def test_symmetric(a: float, b:float) -> None:
     assert mul(a, b) == mul(b, a)
 
 
-@pytest.mark.task0_2
+@pytest.mark.task0_2()
 @given(small_floats, small_floats, small_floats)
 def test_distribute(x: float, y: float, z: float) -> None:
     r"""
     Write a test that ensures that your operators distribute, i.e.
     :math:`z \times (x + y) = z \times x + z \times y`
     """
-    assert_close(mul(z, (x+y)), mul(z, x) + mul(z, y))
+    assert_close(mul(z, (x + y)), mul(z, x) + mul(z, y))
 
 
-@pytest.mark.task0_2
+@pytest.mark.task0_2()
 def test_other() -> None:
     """
     Write a test that ensures some other property holds for your functions.
@@ -162,7 +161,7 @@ def test_other() -> None:
 # properties.
 
 
-@pytest.mark.task0_3
+@pytest.mark.task0_3()
 @given(small_floats, small_floats, small_floats, small_floats)
 def test_zip_with(a: float, b: float, c: float, d: float) -> None:
     x1, x2 = addLists([a, b], [c, d])
@@ -171,7 +170,7 @@ def test_zip_with(a: float, b: float, c: float, d: float) -> None:
     assert_close(x2, y2)
 
 
-@pytest.mark.task0_3
+@pytest.mark.task0_3()
 @given(
     lists(small_floats, min_size=5, max_size=5),
     lists(small_floats, min_size=5, max_size=5),
@@ -184,22 +183,22 @@ def test_sum_distribute(ls1: List[float], ls2: List[float]) -> None:
     sum1 = sum(ls1)
     sum2 = sum(ls2)
     sum12 = sum(zipWith(add)(ls1, ls2))
-    assert_close(sum1+sum2, sum12)
+    assert_close(sum1 + sum2, sum12)
 
 
-@pytest.mark.task0_3
+@pytest.mark.task0_3()
 @given(lists(small_floats))
 def test_sum(ls: List[float]) -> None:
     assert_close(sum(ls), sum(ls))
 
 
-@pytest.mark.task0_3
+@pytest.mark.task0_3()
 @given(small_floats, small_floats, small_floats)
 def test_prod(x: float, y: float, z: float) -> None:
     assert_close(prod([x, y, z]), x * y * z)
 
 
-@pytest.mark.task0_3
+@pytest.mark.task0_3()
 @given(lists(small_floats))
 def test_negList(ls: List[float]) -> None:
     check = negList(ls)
